@@ -9,23 +9,35 @@ use Illuminate\Support\Facades\Validator;
 
 class StudentsController extends Controller
 {
+    
+
+
     public function index(){
        $students = Students::all();
-
        
     if($students ->count() > 0){
         $data =[ 
             'status' => 200,
-            'message' => $students
-        
+            'student' => $students
+    
             ];
+
         return response()->json($data, 200);
+        // return view('studentInfo.index')->with('studentInfo', $students);
+
     }else{
         return response()->json([
             'status' => 404,
             'message' => 'No Records Found'
         ], 404);
     }
+
+    
+    }
+    
+    public function create()
+    {
+        return view('studentInfo.create');
     }
 
     public function store(Request $request)
@@ -54,8 +66,10 @@ class StudentsController extends Controller
             if($students){
                 return response()->json([
                     'status' => 200,
-                    'message' => 'Students registered Successfully'
+                    'message' => 'Profile registered Successfully'
                 ], 200);
+                // return redirect('api/students')->with('success', 'Profile registered Successfully');
+
 
             }else{
                 return response()->json([
@@ -67,6 +81,23 @@ class StudentsController extends Controller
             }
 
         }
+        
+        // if($validator->fails()){
+        //     return back()->withErrors($validator)->withInput();
+        // }else{
+        //     $students = Students::create([
+        //         'name' => $request->name,
+        //         'course' =>  $request->course,
+        //         'email' =>  $request->email,
+        //         'phone' =>  $request->phone
+        //     ]);
+    
+        //     if($students){
+        //         return redirect('/students')->with('success', 'Profile registered Successfully');
+        //     }else{
+        //         return redirect('/students/create')->with('error', 'Something went wrong!');
+        //     }
+        // }
 
         
     }
@@ -84,7 +115,7 @@ class StudentsController extends Controller
         }else{
             return response()->json([
                 'status' => 404,
-                'message' => 'Student Not Found :('
+                'message' => 'Profile Not Found :('
             ], 404);
             
 
@@ -106,7 +137,7 @@ class StudentsController extends Controller
         }else{
             return response()->json([
                 'status' => 404,
-                'message' => 'Student Not Found :('
+                'message' => 'Profile Not Found :('
             ], 404);
             
 
@@ -145,13 +176,13 @@ class StudentsController extends Controller
 
                 return response()->json([
                     'status' => 200,
-                    'message' => 'Students Updated Successfully'
+                    'message' => 'Profile Updated Successfully'
                 ], 200);
 
             }else{
                 return response()->json([
                     'status' => 404,
-                    'message' => 'Studnet Not Found! :('
+                    'message' => 'Profile Not Found! :('
                 ], 404);
                 
 
@@ -159,23 +190,36 @@ class StudentsController extends Controller
         
     }
 }
+// public function destroy($id){
+//     $students = Students::find($id);
+//     if($students){
+//         $students->delete();
+//         return redirect('api/students')->with('flash_message', 'Profile Deleted Successfully!');
+
+//     }else{
+//         return response()->json([
+//             'status' => 404,
+//             'message' => 'Profile Not Found! :('
+//         ], 404);
+//     }
+
+
+// }
+
 public function destroy($id){
     $students = Students::find($id);
     if($students){
         $students->delete();
         return response()->json([
             'status' => 200,
-            'message' => 'Studnet Deleted Successfully'
-        ], 200);
-
-    }else{
+            'message' => 'Student deleted successfully'
+        ]);
+    } else {
         return response()->json([
             'status' => 404,
-            'message' => 'Studnet Not Found! :('
+            'message' => 'Student not found'
         ], 404);
     }
-
-
 }
 
 

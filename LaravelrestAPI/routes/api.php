@@ -18,7 +18,7 @@ use App\Http\Controllers\API\StudentsController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-
+// Route::get('students1', [StudentsController::class, 'create']);
 Route::get('students', [StudentsController::class, 'index']);
 Route::post('students', [StudentsController::class, 'store']);
 Route::get('students/{id}', [StudentsController::class, 'show']);
